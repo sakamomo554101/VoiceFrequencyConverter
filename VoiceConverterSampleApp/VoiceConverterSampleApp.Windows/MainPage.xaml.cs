@@ -13,6 +13,9 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+// add
+using Windows.Media.Capture;
+
 // 空白ページのアイテム テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=234238 を参照してください
 
 namespace VoiceConverterSampleApp
@@ -25,6 +28,11 @@ namespace VoiceConverterSampleApp
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        private void RecordVoice_Button_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

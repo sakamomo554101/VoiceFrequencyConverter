@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceConverterSampleApp.Win
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceConverterSampleApp.WindowsPhone", "VoiceConverterSampleApp\VoiceConverterSampleApp.WindowsPhone\VoiceConverterSampleApp.WindowsPhone.csproj", "{6F79B725-3AAB-4E8E-8C58-F6AD78EE3354}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoiceRecordManager", "VoiceRecordManager\VoiceRecordManager.csproj", "{8EFFB2E9-4B72-4052-AA79-56B52259D226}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		VoiceConverterSampleApp\VoiceConverterSampleApp.Shared\VoiceConverterSampleApp.Shared.projitems*{6f79b725-3aab-4e8e-8c58-f6ad78ee3354}*SharedItemsImports = 4
@@ -72,6 +74,16 @@ Global
 		{6F79B725-3AAB-4E8E-8C58-F6AD78EE3354}.Release|x86.ActiveCfg = Release|x86
 		{6F79B725-3AAB-4E8E-8C58-F6AD78EE3354}.Release|x86.Build.0 = Release|x86
 		{6F79B725-3AAB-4E8E-8C58-F6AD78EE3354}.Release|x86.Deploy.0 = Release|x86
+		{8EFFB2E9-4B72-4052-AA79-56B52259D226}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EFFB2E9-4B72-4052-AA79-56B52259D226}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EFFB2E9-4B72-4052-AA79-56B52259D226}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{8EFFB2E9-4B72-4052-AA79-56B52259D226}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8EFFB2E9-4B72-4052-AA79-56B52259D226}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8EFFB2E9-4B72-4052-AA79-56B52259D226}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EFFB2E9-4B72-4052-AA79-56B52259D226}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EFFB2E9-4B72-4052-AA79-56B52259D226}.Release|ARM.ActiveCfg = Release|Any CPU
+		{8EFFB2E9-4B72-4052-AA79-56B52259D226}.Release|x64.ActiveCfg = Release|Any CPU
+		{8EFFB2E9-4B72-4052-AA79-56B52259D226}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,5 +92,6 @@ Global
 		{E1960496-26F4-4841-9FAC-23B963C5C075} = {9C52F2A8-0A8D-4AD5-AFE9-CD5D61D0948D}
 		{0DF164D7-3417-49A6-A80F-17F757A32E26} = {9C52F2A8-0A8D-4AD5-AFE9-CD5D61D0948D}
 		{6F79B725-3AAB-4E8E-8C58-F6AD78EE3354} = {9C52F2A8-0A8D-4AD5-AFE9-CD5D61D0948D}
+		{8EFFB2E9-4B72-4052-AA79-56B52259D226} = {9C52F2A8-0A8D-4AD5-AFE9-CD5D61D0948D}
 	EndGlobalSection
 EndGlobal
