@@ -16,6 +16,7 @@ namespace VoiceRecordManager
         private MediaCapture mMediaCapture = null;
         private VoiceRecordingState mRecordingState = null;
         private EncordingFormatState mEncordingFormatState = null;
+        private EncordingQualityState mEncordingQualityState = null;
         private IRandomAccessStream mAudioMemory = null; 
 
         public VoiceRecorder()
@@ -32,6 +33,7 @@ namespace VoiceRecordManager
             // 各コンポーネントの初期化
             mRecordingState = new VoiceRecordingState();
             mEncordingFormatState = new EncordingFormatState();
+            mEncordingQualityState = new EncordingQualityState();
             mMediaCapture = await InitMediaCapture(settings, MediaCaptureOnFailed, MediaCaptureOnRecordLimitationExceeded);
         }
 
@@ -48,6 +50,26 @@ namespace VoiceRecordManager
         public async void StopRecording()
         {
 
+        }
+
+        public void setEncordingFormat(EncordingFormatState.EncordingFormatType encordingFormat)
+        {
+            mEncordingFormatState.EncordingFormat = encordingFormat;
+        }
+
+        public EncordingFormatState.EncordingFormatType getEncordingFormat()
+        {
+            return mEncordingFormatState.EncordingFormat;
+        }
+
+        public void setEncordingQuality(EncordingQualityState.EncordingQualityType encordingQuality)
+        {
+            mEncordingQualityState.EncordingQuality = encordingQuality;
+        }
+
+        public EncordingQualityState.EncordingQualityType getEncordingQuality()
+        {
+            return mEncordingQualityState.EncordingQuality;
         }
 
         private async Task<MediaCapture> InitMediaCapture(MediaCaptureInitializationSettings Settings,
