@@ -39,17 +39,31 @@ namespace VoiceRecordManager
 
         public void Finalize()
         {
-
+            // TODO
         }
 
         public async void StartRecording()
         {
+            if (mMediaCapture == null)
+            {
+                return;
+            }
             
+            MediaEncodingProfile profile = getProfileFromEncordingFormat(mEncordingFormatState, mEncordingQualityState);
+            mAudioMemory = new InMemoryRandomAccessStream();
+            await mMediaCapture.StartRecordToStreamAsync(profile, mAudioMemory);
+            mRecordingState.RecordingMode = VoiceRecordingState.RecordingModeType.Recording;
         }
 
         public async void StopRecording()
         {
+            if (mMediaCapture == null)
+            {
+                return;
+            }
 
+            await mMediaCapture.StopRecordAsync();
+            mRecordingState.RecordingMode = VoiceRecordingState.RecordingModeType.Stopped;
         }
 
         public void setEncordingFormat(EncordingFormatState.EncordingFormatType encordingFormat)
@@ -71,6 +85,13 @@ namespace VoiceRecordManager
         {
             return mEncordingQualityState.EncordingQuality;
         }
+
+        public VoiceRecordingState.RecordingModeType getRecordingMode()
+        {
+            return mRecordingState.RecordingMode;
+        }
+
+
 
         private async Task<MediaCapture> InitMediaCapture(MediaCaptureInitializationSettings Settings,
                                                           MediaCaptureFailedEventHandler FailedDelegate, 
