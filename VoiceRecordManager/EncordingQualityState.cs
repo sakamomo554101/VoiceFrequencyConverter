@@ -9,7 +9,7 @@ using Windows.Media.MediaProperties;
 
 namespace VoiceRecordManager
 {
-    class EncordingQualityState
+    public class EncordingQualityState
     {
         public enum EncordingQualityType
         {

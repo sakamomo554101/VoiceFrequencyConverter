@@ -37,11 +37,6 @@ namespace VoiceRecordManager
             mMediaCapture = await InitMediaCapture(settings, MediaCaptureOnFailed, MediaCaptureOnRecordLimitationExceeded);
         }
 
-        public void Finalize()
-        {
-            // TODO
-        }
-
         public async void StartRecording()
         {
             if (mMediaCapture == null)
@@ -66,32 +61,53 @@ namespace VoiceRecordManager
             mRecordingState.RecordingMode = VoiceRecordingState.RecordingModeType.Stopped;
         }
 
-        public void setEncordingFormat(EncordingFormatState.EncordingFormatType encordingFormat)
+        public void SetEncordingFormat(EncordingFormatState.EncordingFormatType encordingFormat)
         {
             mEncordingFormatState.EncordingFormat = encordingFormat;
         }
 
-        public EncordingFormatState.EncordingFormatType getEncordingFormat()
+        public EncordingFormatState.EncordingFormatType GetEncordingFormat()
         {
             return mEncordingFormatState.EncordingFormat;
         }
 
-        public void setEncordingQuality(EncordingQualityState.EncordingQualityType encordingQuality)
+        public void SetEncordingQuality(EncordingQualityState.EncordingQualityType encordingQuality)
         {
             mEncordingQualityState.EncordingQuality = encordingQuality;
         }
 
-        public EncordingQualityState.EncordingQualityType getEncordingQuality()
+        public EncordingQualityState.EncordingQualityType GetEncordingQuality()
         {
             return mEncordingQualityState.EncordingQuality;
         }
 
-        public VoiceRecordingState.RecordingModeType getRecordingMode()
+        public VoiceRecordingState.RecordingModeType GetRecordingMode()
         {
             return mRecordingState.RecordingMode;
         }
 
+        public async Task<byte[]> GetRecordingData()
+        {
+            byte[] buffer = null;
+            if (mAudioMemory == null)
+            {
+                return null;
+            }
 
+            using (DataReader reader = new DataReader(mAudioMemory.GetInputStreamAt(0)))
+            {
+                uint bufferSize = (uint)mAudioMemory.Size;
+                await reader.LoadAsync(bufferSize);
+                buffer = new byte[bufferSize];
+                reader.ReadBytes(buffer);
+            }
+
+            // 内部の音声データを格納したメモリを開放する
+            mAudioMemory.Dispose();
+            mAudioMemory = null;
+
+            return buffer;
+        }
 
         private async Task<MediaCapture> InitMediaCapture(MediaCaptureInitializationSettings Settings,
                                                           MediaCaptureFailedEventHandler FailedDelegate, 

@@ -9,7 +9,7 @@ using Windows.Media.Capture;
 
 namespace VoiceRecordManager
 {
-    class EncordingFormatState
+    public class EncordingFormatState
     {
         public enum EncordingFormatType
         {

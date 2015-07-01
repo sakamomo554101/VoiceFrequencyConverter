@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VoiceRecordManager
 {
-    class VoiceRecordingState
+    public class VoiceRecordingState
     {
         public enum RecordingModeType
         {
