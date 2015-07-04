@@ -11,12 +11,6 @@ namespace VoiceRecordManager
 {
     public class EncordingFormatState
     {
-        public enum EncordingFormatType
-        {
-            Mp3,
-            Mp4,
-            Wma
-        }
         public EncordingFormatType EncordingFormat;
         public EncordingFormatState()
         {

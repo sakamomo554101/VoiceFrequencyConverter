@@ -24,49 +24,55 @@ namespace VoiceRecordManager
             // TODO
         }
 
-        public async void Initialize() 
+        public async Task<bool> Initialize() 
         {
             // 音声のみを記録するように設定する
             MediaCaptureInitializationSettings settings = new MediaCaptureInitializationSettings();
             settings.StreamingCaptureMode = StreamingCaptureMode.Audio;
 
             // 各コンポーネントの初期化
+            mMediaCapture = await InitMediaCapture(settings, MediaCaptureOnFailed, MediaCaptureOnRecordLimitationExceeded);
             mRecordingState = new VoiceRecordingState();
             mEncordingFormatState = new EncordingFormatState();
             mEncordingQualityState = new EncordingQualityState();
-            mMediaCapture = await InitMediaCapture(settings, MediaCaptureOnFailed, MediaCaptureOnRecordLimitationExceeded);
+
+            return (mMediaCapture != null);
         }
 
-        public async void StartRecording()
+        public async Task<bool> StartRecording()
         {
             if (mMediaCapture == null)
             {
-                return;
+                return false;
             }
             
             MediaEncodingProfile profile = getProfileFromEncordingFormat(mEncordingFormatState, mEncordingQualityState);
             mAudioMemory = new InMemoryRandomAccessStream();
             await mMediaCapture.StartRecordToStreamAsync(profile, mAudioMemory);
             mRecordingState.RecordingMode = VoiceRecordingState.RecordingModeType.Recording;
+
+            return true;
         }
 
-        public async void StopRecording()
+        public async Task<bool> StopRecording()
         {
             if (mMediaCapture == null)
             {
-                return;
+                return false;
             }
 
             await mMediaCapture.StopRecordAsync();
             mRecordingState.RecordingMode = VoiceRecordingState.RecordingModeType.Stopped;
+
+            return true;
         }
 
-        public void SetEncordingFormat(EncordingFormatState.EncordingFormatType encordingFormat)
+        public void SetEncordingFormat(EncordingFormatType encordingFormat)
         {
             mEncordingFormatState.EncordingFormat = encordingFormat;
         }
 
-        public EncordingFormatState.EncordingFormatType GetEncordingFormat()
+        public EncordingFormatType GetEncordingFormat()
         {
             return mEncordingFormatState.EncordingFormat;
         }
@@ -148,13 +154,13 @@ namespace VoiceRecordManager
             MediaEncodingProfile encordingProfile = null;
             switch (mEncordingFormatState.EncordingFormat)
             {
-                case EncordingFormatState.EncordingFormatType.Mp3:
+                case EncordingFormatType.Mp3:
                     encordingProfile = MediaEncodingProfile.CreateMp3(quality);
                     break;
-                case EncordingFormatState.EncordingFormatType.Mp4:
+                case EncordingFormatType.Mp4:
                     encordingProfile = MediaEncodingProfile.CreateM4a(quality);
                     break;
-                case EncordingFormatState.EncordingFormatType.Wma:
+                case EncordingFormatType.Wma:
                     encordingProfile = MediaEncodingProfile.CreateWma(quality);
                     break;
             }
