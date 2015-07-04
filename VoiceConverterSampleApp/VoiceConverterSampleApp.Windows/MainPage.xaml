@@ -8,6 +8,7 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBlock x:Name="RecordState_TextBlock" Text="未初期化" HorizontalAlignment="Center" VerticalAlignment="Top" TextAlignment="Center" FontSize="50" Margin="579,32,587,0"/>
         <Button x:Name="RecordVoice_Button" Width="200" Height="100" HorizontalAlignment="Center" Content="音声録音" FontSize="20" Click="RecordVoice_Button_Click" Margin="582,277,584,391"></Button>
         <Button x:Name="StopRecord_Button" Width="200" Height="100" HorizontalAlignment="Center" Content="録音停止" FontSize="20" Click="StopRecordVoice_Button_Click" Margin="582,410,584,258"></Button>
         <Button x:Name="SaveRecordVoice_Button" Width="200" Height="100" HorizontalAlignment="Center" Content="音声保存" FontSize="20" Click="SaveRecordVoice_Button_Click" Margin="582,548,584,120" ></Button>

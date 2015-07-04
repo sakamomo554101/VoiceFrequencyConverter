@@ -34,30 +34,36 @@ namespace VoiceConverterSampleApp
         public MainPage()
         {
             this.InitializeComponent();
-
             mVoiceRecorder = new VoiceRecorder();
-            mVoiceRecorder.Initialize();
         }
 
         private async void RecordVoice_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (mVoiceRecorder.GetRecordingMode() == VoiceRecordingState.RecordingModeType.Initializing)
+            if (mVoiceRecorder.GetRecordingMode() == RecordingModeType.Uninitialized)
+            {
+                await mVoiceRecorder.Initialize();
+                ModifyRecordState_TextBlock(mVoiceRecorder.GetRecordingMode());
+            }
+
+            if (mVoiceRecorder.GetRecordingMode() == RecordingModeType.Initialized)
             {
                 bool ret = await mVoiceRecorder.StartRecording();
+                ModifyRecordState_TextBlock(mVoiceRecorder.GetRecordingMode());
             }
         }
 
         private async void StopRecordVoice_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (mVoiceRecorder.GetRecordingMode() == VoiceRecordingState.RecordingModeType.Recording)
+            if (mVoiceRecorder.GetRecordingMode() == RecordingModeType.Recording)
             {
                 bool ret = await mVoiceRecorder.StopRecording();
+                ModifyRecordState_TextBlock(mVoiceRecorder.GetRecordingMode());
             }
         }
 
         private async void SaveRecordVoice_Button_Click(object sender, RoutedEventArgs e)
         {
-            if (mVoiceRecorder.GetRecordingMode() == VoiceRecordingState.RecordingModeType.Stopped)
+            if (mVoiceRecorder.GetRecordingMode() == RecordingModeType.Stopped)
             {
                 byte[] voiceData = await mVoiceRecorder.GetRecordingData();
 
@@ -66,6 +72,8 @@ namespace VoiceConverterSampleApp
                 InitFileSavePicker(fileExtention);
                 var saveFile = await mFileSavePicker.PickSaveFileAsync();
                 await FileIO.WriteBytesAsync(saveFile, voiceData);
+
+                ModifyRecordState_TextBlock(mVoiceRecorder.GetRecordingMode());
             }
         }
 
@@ -74,6 +82,25 @@ namespace VoiceConverterSampleApp
             mFileSavePicker = new FileSavePicker();
             mFileSavePicker.FileTypeChoices.Add("Encoding", new List<string>() { fileExtention });
             mFileSavePicker.SuggestedStartLocation = PickerLocationId.MusicLibrary;
+        }
+
+        private void ModifyRecordState_TextBlock(RecordingModeType mode)
+        {
+            switch (mode)
+            {
+                case RecordingModeType.Uninitialized:
+                    RecordState_TextBlock.Text = "未初期化";
+                    break;
+                case RecordingModeType.Initialized:
+                    RecordState_TextBlock.Text = "初期化済み";
+                    break;
+                case RecordingModeType.Recording:
+                    RecordState_TextBlock.Text = "録音中";
+                    break;
+                case RecordingModeType.Stopped:
+                    RecordState_TextBlock.Text = "録音終了";
+                    break;
+            }
         }
     }
 }

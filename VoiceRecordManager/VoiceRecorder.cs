@@ -21,7 +21,9 @@ namespace VoiceRecordManager
 
         public VoiceRecorder()
         {
-            // TODO
+            mRecordingState = new VoiceRecordingState();
+            mEncordingFormatState = new EncordingFormatState();
+            mEncordingQualityState = new EncordingQualityState();
         }
 
         public async Task<bool> Initialize() 
@@ -30,11 +32,11 @@ namespace VoiceRecordManager
             MediaCaptureInitializationSettings settings = new MediaCaptureInitializationSettings();
             settings.StreamingCaptureMode = StreamingCaptureMode.Audio;
 
-            // 各コンポーネントの初期化
+            // 録音するコンポーネントの初期化
             mMediaCapture = await InitMediaCapture(settings, MediaCaptureOnFailed, MediaCaptureOnRecordLimitationExceeded);
-            mRecordingState = new VoiceRecordingState();
-            mEncordingFormatState = new EncordingFormatState();
-            mEncordingQualityState = new EncordingQualityState();
+
+            // レコーディング状態を初期化完了状態に変更する
+            mRecordingState.RecordingMode = RecordingModeType.Initialized;
 
             return (mMediaCapture != null);
         }
@@ -49,7 +51,7 @@ namespace VoiceRecordManager
             MediaEncodingProfile profile = getProfileFromEncordingFormat(mEncordingFormatState, mEncordingQualityState);
             mAudioMemory = new InMemoryRandomAccessStream();
             await mMediaCapture.StartRecordToStreamAsync(profile, mAudioMemory);
-            mRecordingState.RecordingMode = VoiceRecordingState.RecordingModeType.Recording;
+            mRecordingState.RecordingMode = RecordingModeType.Recording;
 
             return true;
         }
@@ -62,7 +64,7 @@ namespace VoiceRecordManager
             }
 
             await mMediaCapture.StopRecordAsync();
-            mRecordingState.RecordingMode = VoiceRecordingState.RecordingModeType.Stopped;
+            mRecordingState.RecordingMode = RecordingModeType.Stopped;
 
             return true;
         }
@@ -87,7 +89,7 @@ namespace VoiceRecordManager
             return mEncordingQualityState.EncordingQuality;
         }
 
-        public VoiceRecordingState.RecordingModeType GetRecordingMode()
+        public RecordingModeType GetRecordingMode()
         {
             return mRecordingState.RecordingMode;
         }
@@ -111,6 +113,9 @@ namespace VoiceRecordManager
             // 内部の音声データを格納したメモリを開放する
             mAudioMemory.Dispose();
             mAudioMemory = null;
+
+            // レコーディング状態を初期化に戻す
+            mRecordingState.RecordingMode = RecordingModeType.Initialized;
 
             return buffer;
         }

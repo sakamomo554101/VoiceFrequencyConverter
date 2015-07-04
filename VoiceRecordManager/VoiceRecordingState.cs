@@ -6,19 +6,21 @@ using System.Threading.Tasks;
 
 namespace VoiceRecordManager
 {
+    public enum RecordingModeType
+    {
+        Uninitialized,
+        Initialized,
+        Recording,
+        Stopped
+    }
+
     public class VoiceRecordingState
     {
-        public enum RecordingModeType
-        {
-            Initializing,
-            Recording,
-            Stopped
-        }
         public RecordingModeType RecordingMode;
 
         public VoiceRecordingState()
         {
-            RecordingMode = RecordingModeType.Initializing;
+            RecordingMode = RecordingModeType.Uninitialized;
         }
     }
 }
