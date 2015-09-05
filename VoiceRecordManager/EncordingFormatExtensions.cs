@@ -11,7 +11,8 @@ namespace VoiceRecordManager
         Mp3,
         Mp4,
         Avi,
-        Wma
+        Wma,
+        Wav
     }
 
     public static class EncordingFormatExtensions
@@ -28,6 +29,8 @@ namespace VoiceRecordManager
                     return ".avi";
                 case EncordingFormatType.Wma:
                     return ".wma";
+                case EncordingFormatType.Wav:
+                    return ".wav";
                 default:
                     throw new ArgumentOutOfRangeException("encodingFormat");
             }

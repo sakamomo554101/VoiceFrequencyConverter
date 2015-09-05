@@ -14,7 +14,8 @@ namespace VoiceRecordManager
         public EncordingFormatType EncordingFormat;
         public EncordingFormatState()
         {
-            EncordingFormat = EncordingFormatType.Mp3;
+            // EncordingFormat = EncordingFormatType.Mp3;
+            EncordingFormat = EncordingFormatType.Wav;
         }
     }
 }

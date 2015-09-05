@@ -168,6 +168,9 @@ namespace VoiceRecordManager
                 case EncordingFormatType.Wma:
                     encordingProfile = MediaEncodingProfile.CreateWma(quality);
                     break;
+                case EncordingFormatType.Wav:
+                    encordingProfile = MediaEncodingProfile.CreateWav(quality);
+                    break;
             }
 
             return encordingProfile;
